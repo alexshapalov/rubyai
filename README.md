@@ -53,13 +53,13 @@ You can use it to [generate a response](https://platform.openai.com/docs/api-ref
 
 ```ruby
 api_key = "YOUR_API_KEY"
-messages = [{"role": "user", "content": "Say this is a test!"}]
+messages = "Who is the best chess player in history?"
 
 result = RubyAI::Client.new(api_key, messages).call
 
-puts result
+puts result.dig("choices", 0, "message", "content")
 
-# => {"id"=>"id", "object"=>"chat.completion", "created"=>1679516289, "model"=>"gpt-3.5-turbo-0301", "usage"=>{"prompt_tokens"=>13, "completion_tokens"=>6, "total_tokens"=>19}, "choices"=>[{"message"=>{"role"=>"assistant", "content"=>"\n\nThis is a test!"}, "finish_reason"=>"stop", "index"=>0}]}
+# => As an AI language model, I do not have personal opinions, but according to historical records, Garry Kasparov is often considered as one of the best chess players in history. Other notable players include Magnus Carlsen, Bobby Fischer, and Jose Capablanca.
 ```
 
 ## Development

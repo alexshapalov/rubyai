@@ -11,8 +11,8 @@ module RubyAI
     def initialize(api_key, messages, temperature: 0.7, model: "gpt-3.5-turbo")
       @api_key = api_key
       @messages = messages
-      @model = model
       @temperature = temperature
+      @model = model
     end
 
     attr_accessor :api_key, :model, :messages, :temperature
@@ -32,7 +32,7 @@ module RubyAI
     def body
       {
         'model': model,
-        'messages': messages,
+        'messages': [{"role": "user", "content": messages}],
         'temperature': temperature
       }
     end
