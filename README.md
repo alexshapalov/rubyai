@@ -7,7 +7,9 @@
 
 Generate text with ChatGPT (Generative Pre-trained Transformer)
 
-### Bundler
+
+
+# Installation
 
 Add this line to your application's Gemfile:
 
@@ -17,13 +19,12 @@ gem "rubyai"
 
 And then execute:
 
-$ bundle install
+    $ bundle install
 
-### Gem install
 
 Or install with:
 
-$ gem install rubyai
+    $ gem install rubyai
 
 and require with:
 
@@ -31,7 +32,7 @@ and require with:
 require "rubyai"
 ```
 
-## Usage
+# Usage
 
 - Get your API key from [https://beta.openai.com/account/api-keys](https://beta.openai.com/account/api-keys)
 
