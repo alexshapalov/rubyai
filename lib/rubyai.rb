@@ -8,10 +8,10 @@ module RubyAI
   class Client
     BASE_URL = URI.parse("https://api.openai.com/v1/chat/completions")
 
-    def initialize(api_key, model, messages, temperature)
+    def initialize(api_key, messages, temperature: 0.7, model: "gpt-3.5-turbo")
       @api_key = api_key
-      @model = model
       @messages = messages
+      @model = model
       @temperature = temperature
     end
 
