@@ -1,7 +1,7 @@
 # RubyAI
 
 [![Gem Version](https://badge.fury.io/rb/rubyai.svg)](https://badge.fury.io/rb/rubyai)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/alexshapalov/rubyai/blob/main/LICENSE.txt)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/alexshapalov/rubyai/blob/main/LICENSE)
 
 ## Use the [OpenAI API 🤖 ](https://openai.com/blog/openai-api/) with Ruby! ❤️
 
