@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "rubyai"
-  s.version     = "0.0.2"
+  s.version     = "0.0.3"
   s.summary     = "A Ruby gem for the OpenAI GPT-3 API"
   s.homepage    = "https://github.com/alexshapalov/rubyai"
   s.authors     = ["Alex Shapalov"]
