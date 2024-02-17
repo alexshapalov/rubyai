@@ -1,4 +1,4 @@
-# RubyAI
+# RubyAI - OpenAI integration Ruby gem
 
 [![Gem Version](https://badge.fury.io/rb/rubyai.svg)](https://badge.fury.io/rb/rubyai)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/alexshapalov/rubyai/blob/main/LICENSE)
