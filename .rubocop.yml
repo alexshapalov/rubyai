@@ -12,6 +12,14 @@ Layout/LineLength:
   Exclude:
     - "**/*.gemspec"
 
+Lint/AmbiguousOperator:
+  # https://github.com/rubocop/rubocop/issues/4294
+  Exclude:
+    - "lib/openai/client.rb"
+
+Metrics/AbcSize:
+  Max: 20
+
 Metrics/BlockLength:
   Exclude:
     - "spec/**/*"
