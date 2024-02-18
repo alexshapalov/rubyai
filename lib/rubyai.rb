@@ -7,6 +7,15 @@ module RubyAI
   class Client
     BASE_URL = "https://api.openai.com/v1/chat/completions"
 
+    MODELS = {
+      "gpt-4" => "gpt-4",
+      "gpt-4-0314" => "gpt-4-0314",
+      "gpt-4-32k" => "gpt-4-32k",
+      "gpt-3.5-turbo" => "gpt-3.5-turbo",
+      "gpt-3.5-turbo-0301" => "gpt-3.5-turbo-0301",
+      "text-davinci-003" => "text-davinci-003"
+    }
+
     def initialize(api_key, messages, temperature: 0.7, model: "gpt-3.5-turbo")
       @api_key = api_key
       @messages = messages
@@ -31,7 +40,7 @@ module RubyAI
 
     def body
       {
-        'model': @model,
+        'model': MODELS[@model],
         'messages': [{"role": "user", "content": @messages}],
         'temperature': @temperature
       }
