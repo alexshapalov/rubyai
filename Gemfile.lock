@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    diff-lcs (1.5.1)
     faraday (1.10.3)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
@@ -25,6 +26,19 @@ GEM
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
     multipart-post (2.4.0)
+    rspec (3.13.0)
+      rspec-core (~> 3.13.0)
+      rspec-expectations (~> 3.13.0)
+      rspec-mocks (~> 3.13.0)
+    rspec-core (3.13.0)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-support (3.13.0)
     ruby2_keywords (0.0.5)
 
 PLATFORMS
@@ -33,6 +47,7 @@ PLATFORMS
 
 DEPENDENCIES
   faraday
+  rspec
 
 BUNDLED WITH
    2.5.4
