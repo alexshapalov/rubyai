@@ -15,7 +15,7 @@ Layout/LineLength:
 Lint/AmbiguousOperator:
   # https://github.com/rubocop/rubocop/issues/4294
   Exclude:
-    - "lib/openai/client.rb"
+    - "lib/rubyai.rb"
 
 Metrics/AbcSize:
   Max: 20
