@@ -16,7 +16,9 @@ module RubyAI
       "text-davinci-003" => "text-davinci-003"
     }
 
-    def initialize(api_key, messages, temperature: 0.7, model: "gpt-3.5-turbo")
+    DEFAULT_MODEL = "gpt-3.5-turbo"
+
+    def initialize(api_key, messages, temperature: 0.7, model: DEFAULT_MODEL)
       @api_key = api_key
       @messages = messages
       @temperature = temperature
@@ -34,6 +36,10 @@ module RubyAI
       end
 
       JSON.parse(response.body)
+    end
+
+    def mode(model)
+      @model = model
     end
 
     private

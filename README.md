@@ -52,11 +52,10 @@ ChatGPT is a conversational-style text generation model.
 You can use it to [generate a response](https://platform.openai.com/docs/api-reference/chat/create) to a sequence of [messages](https://platform.openai.com/docs/guides/chat/introduction):
 
 ```ruby
-api_key = "YOUR_API_KEY"
+api_key = "YOUR API KEY"
 messages = "Who is the best chess player in history?"
 
-result = RubyAI::Client.new(api_key, messages).call
-
+result = RubyAI::Client.new(api_key, messages, model: "gpt-4").call
 puts result.dig("choices", 0, "message", "content")
 
 # => As an AI language model, I do not have personal opinions, but according to historical records, Garry Kasparov is often considered as one of the best chess players in history. Other notable players include Magnus Carlsen, Bobby Fischer, and Jose Capablanca.
