@@ -3,9 +3,20 @@ require 'json'
 
 module RubyAI
   class Client
-    BASE_URL = "https://api.openai.com/v1/chat/completions".freeze
+    BASE_URL = "https://api.openai.com/v1/chat/completions"
 
-    def initialize(api_key:, messages:, temperature: 0.7, model: "gpt-3.5-turbo")
+    MODELS = {
+      "gpt-4" => "gpt-4",
+      "gpt-4-0314" => "gpt-4-0314",
+      "gpt-4-32k" => "gpt-4-32k",
+      "gpt-3.5-turbo" => "gpt-3.5-turbo",
+      "gpt-3.5-turbo-0301" => "gpt-3.5-turbo-0301",
+      "text-davinci-003" => "text-davinci-003"
+    }
+
+    DEFAULT_MODEL = "gpt-3.5-turbo"
+
+    def initialize(api_key, messages, temperature: 0.7, model: DEFAULT_MODEL)
       @api_key = api_key
       @messages = messages
       @temperature = temperature
@@ -25,11 +36,15 @@ module RubyAI
       JSON.parse(response.body)
     end
 
+    def mode(model)
+      @model = model
+    end
+
     private
 
     def body
       {
-        'model': @model,
+        'model': MODELS[@model],
         'messages': [{"role": "user", "content": @messages}],
         'temperature': @temperature
       }
