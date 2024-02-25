@@ -36,10 +36,6 @@ module RubyAI
       JSON.parse(response.body)
     end
 
-    def mode(model)
-      @model = model
-    end
-
     private
 
     def body
