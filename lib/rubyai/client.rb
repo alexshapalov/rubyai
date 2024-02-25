@@ -47,9 +47,9 @@ module RubyAI
     end
 
     def connection
-      Faraday.new do |faraday|
-        faraday.adapter Faraday.default_adapter
+      @connection ||= Faraday.new do |faraday|
+         faraday.adapter Faraday.default_adapter
       end
-    end
+    end 
   end
 end
