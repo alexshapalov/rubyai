@@ -11,3 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initialise repository.
 - Add RubyAI::Client to connect to OpenAI API using user credentials.
+
+## [0.1.1] - 2024-02-21
+
+### Added
+
+- Github Action
+- Faraday gem
+
+## [0.1.2] - 2024-02-22
+
+### Added
+
+- Rubocop gem
+
+## [0.1.3] - 2024-02-23
+
+### Added
+
+- Models GPT-4
