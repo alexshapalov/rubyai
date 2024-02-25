@@ -1,6 +1,12 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.8.6)
+      public_suffix (>= 2.0.2, < 6.0)
+    bigdecimal (3.1.6)
+    crack (1.0.0)
+      bigdecimal
+      rexml
     diff-lcs (1.5.1)
     faraday (1.10.3)
       faraday-em_http (~> 1.0)
@@ -25,7 +31,10 @@ GEM
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
+    hashdiff (1.1.0)
     multipart-post (2.4.0)
+    public_suffix (5.0.4)
+    rexml (3.2.6)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -40,6 +49,10 @@ GEM
       rspec-support (~> 3.13.0)
     rspec-support (3.13.0)
     ruby2_keywords (0.0.5)
+    webmock (3.22.0)
+      addressable (>= 2.8.0)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
 
 PLATFORMS
   ruby
@@ -48,6 +61,7 @@ PLATFORMS
 DEPENDENCIES
   faraday
   rspec
+  webmock
 
 RUBY VERSION
    ruby 3.3.0p0
