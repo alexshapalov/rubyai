@@ -13,7 +13,7 @@ RSpec.describe RubyAI::Client do
     let(:status) { 200 }
 
     before do
-      stub_request(:post, RubyAI::Client::BASE_URL)
+      stub_request(:post, RubyAI::Configuration::BASE_URL)
         .to_return(status: status, body: response_body.to_json, headers: { 'Content-Type' => 'application/json' })
     end
 
