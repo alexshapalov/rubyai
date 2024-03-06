@@ -4,18 +4,18 @@ require_relative 'configuration'
 require_relative 'http' 
  
 module RubyAI
-  class Client < Configuration
-    def initialize(options = {})
-      super(options)
-      @config = RubyAI.configuration
-      apply_options(options)
-  end
+  class Client
+    attr_reader :configuration
+
+    def initialize(config_hash = {})
+      @configuration = Configuration.new(config_hash)
+    end
 
     def call
       response = connection.post do |req|
         req.url RubyAI::Configuration::BASE_URL
-        req.headers.merge!(RubyAI::HTTP.build_headers(@config.api_key))
-        req.body = RubyAI::HTTP.build_body(@config.messages, @config.model, @config.temperature).to_json
+        req.headers.merge!(RubyAI::HTTP.build_headers(@configuration.api_key))
+        req.body = RubyAI::HTTP.build_body(@configuration.messages, @configuration.model, @configuration.temperature).to_json
       end
 
       JSON.parse(response.body)

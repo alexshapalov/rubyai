@@ -15,16 +15,16 @@ module RubyAI
 
     attr_accessor :api_key, :model, :messages, :temperature
 
-    def initialize(options = {})
-      @api_key = options.fetch(:api_key, nil)
-      @model = options.fetch(:model, DEFAULT_MODEL)
-      @messages = options.fetch(:messages, nil)
-      @temperature = options.fetch(:temperature, 0.7)
+    def initialize(config = {})
+      @api_key = config[:api_key]
+      @model = config.fetch(:model, DEFAULT_MODEL)
+      @messages = config.fetch(:messages, nil)
+      @temperature = config.fetch(:temperature, 0.7)
     end
   end
 
   def self.configuration
-    @configuration ||= RubyAI::Configuration.new
+    @configuration ||= Configuration.new(api_key: "api_key")
   end
 
   def self.configure
