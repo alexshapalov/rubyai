@@ -24,7 +24,7 @@ module RubyAI
   end
 
   def self.configuration
-    @configuration ||= Configuration.new(api_key: "api_key")
+    @configuration ||= Configuration.new
   end
 
   def self.configure
