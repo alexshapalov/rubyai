@@ -6,7 +6,7 @@ module RubyAI
 
     def build_body(messages, model, temperature)
       {
-        'model': RubyAI::Configuration::MODELS[model],
+        'model': Configuration::MODELS[model],
         'messages': [{ "role": "user", "content": messages }],
         'temperature': temperature
       }
