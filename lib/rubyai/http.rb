@@ -2,7 +2,7 @@ require_relative 'configuration'
 
 module RubyAI
   module HTTP
-    module_function
+    extend self
 
     def build_body(messages, model, temperature)
       {
