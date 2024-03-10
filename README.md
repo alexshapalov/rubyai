@@ -61,6 +61,25 @@ puts result.dig("choices", 0, "message", "content")
 # => As an AI language model, I do not have personal opinions, but according to historical records, Garry Kasparov is often considered as one of the best chess players in history. Other notable players include Magnus Carlsen, Bobby Fischer, and Jose Capablanca.
 ```
 
+You can also pass client variables using the configuration file.
+Create configruation file like on example:
+```ruby
+configuration = RubyAI::Configuration.new("YOUR API KEY", "Who is the best chess player in history?")
+client = RubyAI::Client.new(configuration)
+result = client.call
+puts result.dig("choices", 0, "message", "content")
+```
+
+Also (mostly) if you are using Rails you can use configure method:
+```ruby
+RubyAI.configure do |config|
+  config.api_key = "YOUR API KEY"
+  config.messages = "Who is the best chess player in history?"
+  config.model = "gpt-3.5-turbo"
+end
+```
+
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can run `bin/console` for an interactive prompt that will allow you to experiment.
