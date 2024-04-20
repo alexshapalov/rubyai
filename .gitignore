@@ -11,3 +11,5 @@
 .rspec_status
 .env
 *.gem
+
+lib/.DS_Store
