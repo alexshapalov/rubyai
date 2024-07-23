@@ -8,7 +8,6 @@
 Generate text with ChatGPT (Generative Pre-trained Transformer)
 
 
-
 # Installation
 
 Add this line to your application's Gemfile:
