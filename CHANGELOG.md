@@ -6,11 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [0.3] - 2024-04-20
+## [0.3] - 2024-11-21
 
 ### Added
 
-- Remove outdated GPT models 
+- gpt-4-turbo
+- gpt-4o-mini
+- o1-mini
+- o1-preview
+
+- Remove outdated GPT 3.5 models 
 
 ## [0.2] - 2024-04-20
 
