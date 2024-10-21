@@ -6,14 +6,14 @@ module RubyAI
     BASE_URL = "https://api.openai.com/v1/chat/completions"
 
     MODELS = {
+      "gpt-3.5-turbo" => "gpt-3.5-turbo",
       "gpt-4" => "gpt-4",
       "gpt-4-32k" => "gpt-4-32k",
-      "gpt-3.5-turbo" => "gpt-3.5-turbo",
-      "text-davinci-003" => "text-davinci-003",
+      "gpt-4-turbo" => "gpt-4-turbo",
       "gpt-4o-mini" => "gpt-4o-mini",
-      "o1-preview" => "o1-preview",
       "o1-mini" => "o1-mini",
-      "gpt-4-turbo" => "gpt-4-turbo"
+      "o1-preview" => "o1-preview",
+      "text-davinci-003" => "text-davinci-003"
     }
 
     DEFAULT_MODEL = "gpt-3.5-turbo"
