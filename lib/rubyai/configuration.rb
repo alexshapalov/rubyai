@@ -6,7 +6,6 @@ module RubyAI
     BASE_URL = "https://api.openai.com/v1/chat/completions"
 
     MODELS = {
-      "gpt-3.5-turbo" => "gpt-3.5-turbo",
       "gpt-4" => "gpt-4",
       "gpt-4-32k" => "gpt-4-32k",
       "gpt-4-turbo" => "gpt-4-turbo",
