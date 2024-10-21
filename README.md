@@ -74,9 +74,18 @@ Also (mostly) if you are using Rails you can use configure method:
 RubyAI.configure do |config|
   config.api_key = "YOUR API KEY"
   config.messages = "Who is the best chess player in history?"
-  config.model = "gpt-3.5-turbo"
+  config.model = "gpt-4o-mini"
 end
 ```
+
+## Models 
+
+We support all popular GPT models:
+
+gpt-4-turbo: A powerful variant of GPT-4 optimized for efficiency and speed, perfect for high-demand tasks.
+gpt-4o-mini: A streamlined version of GPT-4, designed to provide a balance between performance and resource efficiency.
+o1-mini: A compact, yet effective model that is well-suited for lightweight tasks.
+o1-preview: A preview version of the o1 model, offering insights into upcoming advancements and features.
 
 
 ## Development
