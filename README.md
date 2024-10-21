@@ -83,8 +83,11 @@ end
 We support all popular GPT models:
 
 gpt-4-turbo: A powerful variant of GPT-4 optimized for efficiency and speed, perfect for high-demand tasks.
+
 gpt-4o-mini: A streamlined version of GPT-4, designed to provide a balance between performance and resource efficiency.
+
 o1-mini: A compact, yet effective model that is well-suited for lightweight tasks.
+
 o1-preview: A preview version of the o1 model, offering insights into upcoming advancements and features.
 
 
