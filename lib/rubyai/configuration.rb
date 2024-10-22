@@ -1,6 +1,3 @@
-require 'faraday' 
-require 'json' 
-
 module RubyAI
   class Configuration
     BASE_URL = "https://api.openai.com/v1/chat/completions"

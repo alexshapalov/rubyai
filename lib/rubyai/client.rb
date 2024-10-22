@@ -1,6 +1,3 @@
-require_relative 'configuration' 
-require_relative 'http' 
- 
 module RubyAI
   class Client
     attr_reader :configuration

@@ -1,5 +1,3 @@
-require_relative 'configuration'
-
 module RubyAI
   module HTTP
     extend self
