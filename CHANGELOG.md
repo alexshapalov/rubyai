@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [0.3.2] - 2024-11-21
+
+### Added
+
+- Update Gemspec and dependencies
+
 ## [0.3] - 2024-11-21
 
 ### Added
@@ -15,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - o1-mini
 - o1-preview
 
-- Remove outdated GPT 3.5 models 
+- Remove outdated GPT 3.5 models
 
 ## [0.2] - 2024-04-20
 
