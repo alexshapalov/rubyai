@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AnyCable Docs</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  <meta itemprop="name" content="AnyCable Docs" />
+  <meta property="og:title" content="AnyCable Docs" />
+  <meta name="description" content="AnyCable: a real-time server for Rails, JavaScript, and Hotwire applications that runs on your servers and scales" />
+  <meta itemprop="description" content="AnyCable: a real-time server for Rails, JavaScript, and Hotwire applications that runs on your servers and scales" />
+  <meta property="og:description" content="AnyCable: a real-time server for Rails, JavaScript, and Hotwire applications that runs on your servers and scales" />
+  <meta itemprop="image" content="https://docs.anycable.io/assets/images/share.png" />
+  <meta property="og:image" content="https://docs.anycable.io/assets/images/share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@any_cable" />
+  <meta name="twitter:creator" content="@any_cable" />
+  <meta property="og:site_name" content="AnyCable Docs" />
+  <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+  <meta name="keywords" content="rails, actioncable, websocket, anycable, grpc, ruby, erlang, golang" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="view-transition" content="same-origin" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" href="/assets/favicon-32x32.png" sizes="32x32"/>
+  <link rel="icon" type="image/png" href="/assets/favicon-16x16.png" sizes="16x16"/>
+  <link rel="stylesheet" href="/assets/vue.min.css">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"/>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mermaid@9.4.3/dist/mermaid.min.css">
+  <!-- Use a global var to define the router mode to be able to redefine it by injecting a script (e.g., on Netlify) -->
+  <script>window.DOCSIFY_ROUTER_MODE = "hash"</script>
+  <!-- Posthog -->
+  <script> !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_fc9VFWdFAAm5gSlCodHq93iaxxnTTKbjOwsWgAS1FMP',{api_host:'https://app.posthog.com'})</script>
+  <!-- End Posthog -->
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    if (window.DOCSIFY_ROUTER_MODE === "history"){
+      var clink = document.createElement("link")
+      clink.rel = "canonical"
+      document.getElementsByTagName("head")[0].appendChild(clink)
+    }
+
+    if(rhash = sessionStorage.getItem("__redirect_hash__")) {
+      if (window.DOCSIFY_ROUTER_MODE === "hash")
+        window.location.hash = rhash;
+      else
+        window.location.url = rhash;
+      sessionStorage.removeItem("__redirect_hash__");
+    }
+
+    var darkMode = false;
+    if (window.matchMedia) {
+      if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+        darkMode = true;
+      }
+    }
+
+    var mermaidNum = 0;
+    var mermaidInitialized = false;
+
+    window.$docsify = {
+      alias: {
+        '/v1-3/.*_sidebar.md': 'https://raw.githubusercontent.com/anycable/docs.anycable.io/1-3-stable/docs/_sidebar.md',
+        '/v1-4/.*_sidebar.md': 'https://raw.githubusercontent.com/anycable/docs.anycable.io/1-4-stable/docs/_sidebar.md',
+        '/v1-5/.*_sidebar.md': 'https://raw.githubusercontent.com/anycable/docs.anycable.io/1-5-stable/docs/_sidebar.md',
+        '/edge/.*_sidebar.md': '_sidebar.md',
+        '/.*/_sidebar.md': 'https://raw.githubusercontent.com/anycable/docs.anycable.io/1-5-stable/docs/_sidebar.md',
+        '/edge/anycable-go/(.*)': 'https://raw.githubusercontent.com/anycable/anycable-go/master/docs/$1',
+        '/edge/ruby/(.*)': 'https://raw.githubusercontent.com/anycable/anycable/master/docs/$1',
+        '/edge/rails/(.*)': 'https://raw.githubusercontent.com/anycable/anycable-rails/master/docs/$1',
+        '/v1-3/anycable-go/(.*)': 'https://raw.githubusercontent.com/anycable/anycable-go/1-3-stable/docs/$1',
+        '/v1-3/ruby/(.*)': 'https://raw.githubusercontent.com/anycable/anycable/1-3-stable/docs/$1',
+        '/v1-3/rails/(.*)': 'https://raw.githubusercontent.com/anycable/anycable-rails/1-3-stable/docs/$1',
+        '/v1-4/anycable-go/(.*)': 'https://raw.githubusercontent.com/anycable/anycable-go/1-4-stable/docs/$1',
+        '/v1-4/ruby/(.*)': 'https://raw.githubusercontent.com/anycable/anycable/1-4-stable/docs/$1',
+        '/v1-4/rails/(.*)': 'https://raw.githubusercontent.com/anycable/anycable-rails/1-4-stable/docs/$1',
+        '/v1-5/anycable-go/(.*)': 'https://raw.githubusercontent.com/anycable/anycable-go/1-5-stable/docs/$1',
+        '/v1-5/ruby/(.*)': 'https://raw.githubusercontent.com/anycable/anycable/1-5-stable/docs/$1',
+        '/v1-5/rails/(.*)': 'https://raw.githubusercontent.com/anycable/anycable-rails/1-5-stable/docs/$1',
+        '/anycable-go/(.*)': 'https://raw.githubusercontent.com/anycable/anycable-go/1-5-stable/docs/$1',
+        '/ruby/(.*)': 'https://raw.githubusercontent.com/anycable/anycable/1-5-stable/docs/$1',
+        '/rails/(.*)': 'https://raw.githubusercontent.com/anycable/anycable-rails/1-5-stable/docs/$1',
+        '/v1-3/': 'https://raw.githubusercontent.com/anycable/docs.anycable.io/1-3-stable/docs/README.md',
+        '/v1-3/(.*)': 'https://raw.githubusercontent.com/anycable/docs.anycable.io/1-3-stable/docs/$1',
+        '/v1-4/': 'https://raw.githubusercontent.com/anycable/docs.anycable.io/1-4-stable/docs/README.md',
+        '/v1-4/(.*)': 'https://raw.githubusercontent.com/anycable/docs.anycable.io/1-4-stable/docs/$1',
+        '/v1-5/': 'https://raw.githubusercontent.com/anycable/docs.anycable.io/1-5-stable/docs/README.md',
+        '/v1-5/(.*)': 'https://raw.githubusercontent.com/anycable/docs.anycable.io/1-5-stable/docs/$1',
+        '/edge/': 'README.md',
+        '/edge/(.*)': '$1',
+        '/': 'https://raw.githubusercontent.com/anycable/docs.anycable.io/1-5-stable/docs/README.md',
+        '/(.*)': 'https://raw.githubusercontent.com/anycable/docs.anycable.io/1-5-stable/docs/$1'
+      },
+      name: '<a id="logo-link" class="app-name-link" href="/"><div class="sidebar-logo">' +
+        '<img src="/assets/images/logo.svg" height="64px" class="is-light" alt="AnyCable logo light">' +
+        '<img src="/assets/images/logo_bw.svg" height="64px" class="is-dark" alt="AnyCable logo dark">' +
+        '<span class="sidebar-logo-title">AnyCable</span>' +
+        '</div></a>' +
+        '<select id="version-selector" name="version" class="sidebar-version-select">' +
+          '<option value="edge">edge</value>' +
+          '<option value="">v1.5</value>' +
+          '<option value="v1-4">v1.4</value>' +
+          '<option value="v1-3">v1.3</value>' +
+        '</select>',
+      repo: 'https://github.com/anycable',
+      loadSidebar: true,
+      relativePath: true,
+      nameLink: false,
+      subMaxLevel: 2,
+      auto2top: true,
+      routerMode: window.DOCSIFY_ROUTER_MODE,
+      search: {
+        hideOtherSidebarContent: true,
+        api_key: "tr-JtPZuXATfHbKLyKxsHFa66tVqXZ0wUvM",
+        dataset: "38d0ad51-82d5-45dc-b8b6-817bcf49da35",
+        tags: ["latest"],
+        namespaceTags: {
+          "edge": ["edge"],
+          "v1-5": ["v1.5"],
+          "v1-4": ["v1.4"],
+          "v1-3": ["v1.3"]
+        }
+      },
+      namespaces: [
+        {
+          id: "version",
+          values: ["edge", "v1", "v1-1", "v1-2", "v1-3", "v1-4", "v1-5", "v06"],
+          optional: true,
+          selector: "#version-selector"
+        }
+      ],
+      markdown: {
+        renderer: {
+          code: function(code, lang) {
+            if (!mermaidInitialized) {
+              mermaid.initialize({
+                "startOnLoad": false,
+                "theme": "base",
+                "themeVariables": {
+                    "primaryColor": "#f64242",
+                    "secondaryColor": "#fd7373",
+                    "noteBkgColor": "#ffffff",
+                    "darkMode": darkMode,
+                }
+              });
+            }
+
+            if (lang === "mermaid") {
+              return (
+                '<div class="mermaid">' + mermaid.render('mermaid-svg-' + mermaidNum++, code) + "</div>"
+              );
+            }
+            return this.origin.code.apply(this, arguments);
+          }
+        }
+      },
+      plugins:[
+        function(hook, vm) {
+          hook.doneEach(function(){
+            var appNameLink = Docsify.dom.find("#logo-link");
+
+            if (!appNameLink) return;
+
+            appNameLink.href = vm.config.currentNamespace;
+          });
+        },
+        function(hook, vm) {
+          hook.beforeEach(function(){
+            if (clink) {
+              clink.href = "https://docs.anycable.io" + vm.route.path
+            }
+          });
+        },
+        function(hook, vm) {
+          if (!TurboViewTransitions.shouldPerformTransition()) return;
+
+          hook.afterEach(function(html, next) {
+            let newEl = document.createElement("div");
+            newEl.innerHTML = html;
+
+            let oldEl = document.querySelector("section.content")
+
+            TurboViewTransitions.performTransition(oldEl, newEl, function() {
+              next(newEl.innerHTML);
+            },
+            {
+              transitionAttr: 'data-view-transition',
+              activeAttr: 'data-active-view-transition'
+            });
+          })
+        }
+      ]
+    }
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="/assets/docsify-trieve-search.js"></script>
+  <script src="//unpkg.com/docsify-namespaced@0.1.1/dist/docsify-namespaced.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/marked@4"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/mermaid@9.4.3/dist/mermaid.min.js"></script>
+  <script src="https://unpkg.com/docsify-copy-code@2"></script>
+  <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  <script src="/assets/prism-ruby.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+  <script src="/assets/turbo-view-transitions.js"></script>
+</body>
+</html>

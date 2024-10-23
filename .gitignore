@@ -6,10 +6,19 @@
 /pkg/
 /spec/reports/
 /tmp/
-
+build/
+production/
+node_modules/
+bower_components/
+jspm_packages/
 # rspec failure tracking
 .rspec_status
 .env
 *.gem
 
 lib/.DS_Store
+
+*.log
+coverage/
+gemfiles/*.lock
+lefthook-local.yml

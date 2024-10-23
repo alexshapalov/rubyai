@@ -1,0 +1,29 @@
+ignore:
+ - "**/*/Readme.md"
+hostname: https://docs.anycable.io
+url_prefix: <%= ENV.fetch("VERSION_PREFIX", "edge") %>
+
+groups:
+  - name: Deployment
+    tracking_id: deployment
+
+defaults:
+  tags:
+    - docs
+    - <%= ENV.fetch("VERSION_TAG", "edge") %>
+
+pages:
+  - "./getting_started.md"
+  - source: "./pro.md"
+    groups: ["pro"]
+  - "./release_notes.md"
+  - source: "./troubleshooting.md"
+    weight: 3
+  - "./upgrade-notes/*.md"
+  - "./benchmarks.md"
+  - "./misc/*.md"
+  - source: "./pro/*.md"
+    groups: ["pro"]
+  - "./guides/*.md"
+  - source: "./deployment/*.md"
+    groups: ["deployment"]

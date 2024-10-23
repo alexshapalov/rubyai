@@ -1,0 +1,13 @@
+name: Push Stable
+
+on:
+  push:
+    tags:
+      - v1.3.*
+      - v1.4.*
+      - v1.5.*
+  workflow_dispatch:
+
+jobs:
+  push-stable:
+    uses: anycable/github-actions/.github/workflows/push-stable.yml@master

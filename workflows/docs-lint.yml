@@ -1,0 +1,21 @@
+name: Lint Docs
+
+on:
+  push:
+    branches:
+    - master
+    paths:
+    - "**/*.md"
+    - "**/*.html"
+  pull_request:
+    paths:
+    - "**/*.md"
+    - "**/*.html"
+
+jobs:
+  docs-lint:
+    uses: anycable/github-actions/.github/workflows/docs-lint.yml@master
+    with:
+      mdl-path: docs
+      forspell-args: docs/**/*.md
+      lychee-args: docs/* --exclude "(anycable-go|ruby|rails|anycable-go-pro-releases)/" --exclude "jetrockets" --exclude "(master|stable)/docs" --exclude-mail
