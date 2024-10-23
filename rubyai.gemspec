@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
 
   # Dependencies
   s.add_dependency "faraday", "~> 2.0"
+  s.add_dependency "faraday-net_http_persistent"
   s.add_development_dependency "rspec", "~> 3.10"
 
   # Metadata information (optional but useful for gem hosts)
