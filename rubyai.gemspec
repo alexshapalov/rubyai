@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "rubyai"
-  s.version     = "0.4"
+  s.version     = "0.5"
   s.summary     = "A Ruby gem for the OpenAI (GPT-4) API"
   s.description = "RubyAI is a wrapper for the OpenAI API that allows you to interact with GPT-4 within Ruby/Rails applications. It provides simple methods for integrating language model capabilities into your Ruby projects."
   s.homepage    = "https://github.com/alexshapalov/rubyai"
