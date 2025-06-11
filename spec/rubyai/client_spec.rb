@@ -1,5 +1,5 @@
 require 'webmock/rspec'
-require_relative '../lib/rubyai/client.rb'
+require_relative '../../lib/rubyai/client.rb'
 
 RSpec.describe RubyAI::Client do
   let(:api_key) { 'your_api_key' }

@@ -1,0 +1,31 @@
+require_relative '../../lib/rubyai'
+
+RSpec.describe RubyAI do 
+
+  describe '.models' do 
+    it 'should return available models' do 
+      expect(RubyAI.models).to eq(RubyAI::Configuration::MODELS.keys)
+    end
+  end
+
+  describe '.chat' do 
+    let(:api_key) { 'your_api_key' }
+    let(:messages) { 'Hello, how are you?' }
+    let(:temperature) { 0.7 }
+    let(:model) { 'gpt-3.5-turbo' }
+    let(:client) { described_class.chat(api_key: api_key, messages: messages, temperature: temperature, model: model) }
+
+
+    let(:response_body) { { 'completion' => 'This is a response from the model.' } }
+    let(:status) { 200 }
+
+    before do
+      stub_request(:post, RubyAI::Configuration::BASE_URL)
+        .to_return(status: status, body: response_body.to_json, headers: { 'Content-Type' => 'application/json' })
+    end
+
+    it 'returns parsed JSON response when passing through client directly' do
+      expect(described_class.chat).to eq(response_body)
+    end
+  end
+end
