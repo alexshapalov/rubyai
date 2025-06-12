@@ -1,31 +1,44 @@
 module RubyAI
   class Configuration
-    BASE_URL = "https://api.openai.com/v1/chat/completions"
+    PROVIDERS = { 
+      'openai' => "https://api.openai.com/v1/chat/completions",
+      'anthropic' => "https://api.anthropic.com/v1/chat/completions"
+      }.freeze
 
-    MODELS = {
-      "gpt-4" => "gpt-4",
-      "gpt-4-32k" => "gpt-4-32k",
-      "gpt-4-turbo" => "gpt-4-turbo",
-      "gpt-4o-mini" => "gpt-4o-mini",
-      "o1-mini" => "o1-mini",
-      "o1-preview" => "o1-preview",
-      "text-davinci-003" => "text-davinci-003"
-    }
+    MODELS = PROVIDERS.to_h do |provider, _url|
+        [provider, Provider[provider].models]
+      end.freeze
+
+
+    BASE_URL = "https://api.openai.com/v1/chat/completions"
 
     DEFAULT_MODEL = "gpt-3.5-turbo"
 
-    attr_accessor :api_key, :model, :messages, :temperature
+    DEFAULT_PROVIDER = 'openai'
+
+    # default values for configuration
+    attr_accessor :api_key,
+                  :model, 
+                  :messages, 
+                  :temperature, 
+                  :provider,
+                  # :providers
+                  :provider,
+                  :openai_api_key,
+                  :anthropic_api_key
 
     def initialize(config = {})
-      @api_key = config[:api_key]
+      @api_key = config.fetch(:api_key, openai_api_key) 
+      @openai_api_key = config.fetch(:openai_api_key, api_key) 
       @model = config.fetch(:model, DEFAULT_MODEL)
       @messages = config.fetch(:messages, nil)
       @temperature = config.fetch(:temperature, 0.7)
+      @provider = config.fetch(:provider, "openai")
     end
   end
 
   def self.configuration
-    @configuration ||= Configuration.new
+    @configuration ||= RubyAI.config(config = {})
   end
 
   def self.configure

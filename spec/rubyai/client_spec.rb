@@ -6,7 +6,8 @@ RSpec.describe RubyAI::Client do
   let(:messages) { 'Hello, how are you?' }
   let(:temperature) { 0.7 }
   let(:model) { 'gpt-3.5-turbo' }
-  let(:client) { described_class.new(api_key: api_key, messages: messages, temperature: temperature, model: model) }
+  let(:provider) { 'openai' }
+  let(:client) { described_class.new(api_key: api_key, messages: messages, temperature: temperature, provider: provider, model: model) }
 
   describe '#call' do
     let(:response_body) { { 'completion' => 'This is a response from the model.' } }
