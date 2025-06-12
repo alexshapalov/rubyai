@@ -9,7 +9,7 @@ module RubyAI
     def call
       response = connection.post do |req|
         req.url Configuration::PROVIDERS[configuration.provider] || Configuration::BASE_URL
-        req.headers = (HTTP.build_headers(configuration.provider || RubyAI::Configuration::DEFAULT_PROVIDER, RubyAI.config ))
+        req.headers.merge!(HTTP.build_headers(configuration.provider || RubyAI::Configuration::DEFAULT_PROVIDER, RubyAI.config ))
         req.body = HTTP.build_body(configuration.messages, configuration.provider, configuration.model, configuration.temperature).to_json
       end
 

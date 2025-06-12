@@ -23,8 +23,6 @@ module RubyAI
                   :temperature, 
                   :provider,
                   # :providers
-                  :provider,
-                  :openai_api_key,
                   :anthropic_api_key
 
     def initialize(config = {})
