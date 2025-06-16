@@ -4,7 +4,7 @@ module RubyAI
       include ProvidersConfiguration
 
 
-      attr_accessor :api, :messages, :temperature, :max_tokens
+      attr_accessor :api, :messages, :temperature, :max_tokens, :model
 
        # todo: make an initialization for separate instances for using multiple of them 
       def initialize(api: nil, messages: nil, temperature: 0.7, max_tokens: 1000)

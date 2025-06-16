@@ -3,7 +3,7 @@ module RubyAI
     class OpenAI
       include ProvidersConfiguration
       
-      attr_accessor :api, :messages, :temperature
+      attr_accessor :api, :messages, :temperature, :model
 
       # todo: make an initialization for separate instances for using multiple of them 
       def initialize(api: nil, messages: nil, temperature: 0.7)
