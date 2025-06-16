@@ -1,107 +1,168 @@
 # RubyAI - OpenAI integration Ruby gem
 
+  
+
 [![Gem Version](https://badge.fury.io/rb/rubyai.svg)](https://badge.fury.io/rb/rubyai)
+
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/alexshapalov/rubyai/blob/main/LICENSE)
+
+  
 
 ## Use the [OpenAI API 🤖 ](https://openai.com/blog/openai-api/) with Ruby! ❤️
 
-Generate text with ChatGPT (Generative Pre-trained Transformer)
+  
 
+Generate text with ChatGPT, Claude and Gemini!
+
+  
+  
 
 # Installation
 
-Add this line to your application's Gemfile:
+install a latest version via Bundler: 
 
-```ruby
-gem "rubyai"
+```ruby 
+bundle add rubyai
 ```
+
+```
+
+  
 
 And then execute:
 
-    $ bundle install
+  
 
+$ bundle install
+
+  
+  
 
 Or install with:
 
-    $ gem install rubyai
+  
+
+$ gem install rubyai
+
+  
 
 and require with:
 
+  
+
 ```ruby
+
 require "rubyai"
+
 ```
+
+  
 
 # Usage
 
-- Get your API key from [https://beta.openai.com/account/api-keys](https://beta.openai.com/account/api-keys)
+  
+- Get your API key from [https://beta.openai.com/account/api-keys](https://beta.openai.com/account/api-keys), https://console.anthropic.com, https://aistudio.google.com/apikey
 
-- If you belong to multiple organizations, you can get your Organization ID from [https://beta.openai.com/account/org-settings](https://beta.openai.com/account/org-settings)
+- If you belong to multiple organizations, you can get your Organization ID from [https://beta.openai.com/account/org-settings](https://beta.openai.com/account/org-settings) 
+  
+### Configuration 
+Our gem is using separate configurations for every provider it supports, example:
+```ruby 
+# for openai LLM's it could be: 
+RubyAI.configuration.openai.configure do |config|
+	config.api = "your-api" 
+	config.model = "o1-mini"
+	config.temoperature = 0.75
+end
 
-### Quickstart
+# for anthropic: 
+RubyAI.configuration.anthropic.configure do |config| 
+	config.api = "your-api"
+	config.model="claude-2"
+	temperature = 0.75
+	config.max_tokens = 1000 
+end
 
-For a quick test you can pass your token directly to a new client:
-
-```ruby
-result = RubyAI::Client.new(access_token, messages).call
-```
-
-### ChatGPT
-
-ChatGPT is a conversational-style text generation model.
-You can use it to [generate a response](https://platform.openai.com/docs/api-reference/chat/create) to a sequence of [messages](https://platform.openai.com/docs/guides/chat/introduction):
-
-```ruby
-api_key = "YOUR API KEY"
-messages = "Who is the best chess player in history?"
-
-result = RubyAI::Client.new(api_key, messages, model: "gpt-4").call
-puts result.dig("choices", 0, "message", "content")
-
-# => As an AI language model, I do not have personal opinions, but according to historical records, Garry Kasparov is often considered as one of the best chess players in history. Other notable players include Magnus Carlsen, Bobby Fischer, and Jose Capablanca.
-```
-
-You can also pass client variables using the configuration file.
-Create configruation file like on example:
-```ruby
-configuration = RubyAI::Configuration.new("YOUR API KEY", "Who is the best chess player in history?")
-client = RubyAI::Client.new(configuration)
-result = client.call
-puts result.dig("choices", 0, "message", "content")
-```
-
-Also (mostly) if you are using Rails you can use configure method:
-```ruby
-RubyAI.configure do |config|
-  config.api_key = "YOUR API KEY"
-  config.messages = "Who is the best chess player in history?"
-  config.model = "gpt-4o-mini"
+# for gemini: 
+RubyAI.configuration.gemini.configure do |config| 
+	config.api = "your-api"
+	config.model="gemini-1.5-pro"
+	temperature = 0.75
+	config.max_tokens = 1000 
 end
 ```
 
-## Models 
+### Chat 
+After configuration you can chat with models by calling `Chat` class, example: 
+```ruby
+claude2 = RubyAI::Chat.new('anthropic', model: "claude-2")
+claude2.call("Hello world") # => Hash response
+# Or 
 
-We support all popular GPT models:
+gpt = RubyAI::Chat.new("openai", "gpt-4", temperature: 1)
+gpt.call("Hello world!") # => Hash response
+```
+###
 
-gpt-4-turbo: A powerful variant of GPT-4 optimized for efficiency and speed, perfect for high-demand tasks.
+  
 
-gpt-4o-mini: A streamlined version of GPT-4, designed to provide a balance between performance and resource efficiency.
+We support most of the popular GPT models:
 
-o1-mini: A compact, yet effective model that is well-suited for lightweight tasks.
+  
+```ruby
+p RubyAI::Configuration::MODELS.each.each_key
+"openai" =>
+  {"gpt-3.5-turbo" => "gpt-3.5-turbo",
+   "gpt-4" => "gpt-4",
+   "gpt-4-32k" => "gpt-4-32k",
+   "gpt-4-turbo" => "gpt-4-turbo",
+   "gpt-4o-mini" => "gpt-4o-mini",
+   "o1-mini" => "o1-mini",
+   "o1-preview" => "o1-preview",
+   "text-davinci-003" => "text-davinci-003"},
+ "anthropic" =>
+  {"claude-2" => "claude-2",
+   "claude-instant-100k" => "claude-instant-100k",
+   "claude-1" => "claude-1",
+   "claude-1.3" => "claude-1.3",
+   "claude-1.3-sonnet" => "claude-1.3-sonnet",
+   "claude-1.3-sonnet-100k" => "claude-1.3-sonnet-100k"},
+ "gemini" => {"gemini-1.5-pro" => "gemini-1.5-pro", "gemini-1.5-flash" => "gemini-1.5-flash", "gemini-1.0-pro" => "gemini-1.0-pro"}}
 
-o1-preview: A preview version of the o1 model, offering insights into upcoming advancements and features.
+```
+
+
+### TODO: 
+
+
+1. Support for Gemini models to be configurated via `configure` block
+2. Implement more LLM's support
+3. Write an Specs for most of use cases
+4. Stream responses
 
 
 ## Development
+  
 
 After checking out the repo, run `bin/setup` to install dependencies. You can run `bin/console` for an interactive prompt that will allow you to experiment.
 
+  
+
 To install this gem onto your local machine, run `bundle exec rake install`.
 
+  
+  
 
 ## Contributing
 
+  
+
 Bug reports and pull requests are welcome on GitHub at <https://github.com/alexshapalov/rubyai>. This project is intended to be a safe, welcoming space for collaboration, and contributors.
 
+  
+
 ## License
+
+  
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
