@@ -114,7 +114,7 @@ RSpec.describe RubyAI::HTTP do
       let(:provider) { "openai" }
 
       it "returns correct headers for OpenAI" do
-        result = described_class.build_headers(provider, config)
+        result = described_class.build_headers(provider)
 
         expect(result).to eq({
                                "Content-Type": "application/json",

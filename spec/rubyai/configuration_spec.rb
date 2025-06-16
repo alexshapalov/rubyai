@@ -55,16 +55,16 @@ RSpec.describe RubyAI::Client do
       expect(RubyAI::Configuration::MODELS).to be_an_instance_of(Hash)
     end
 
-    specify "BASE_URL" do
-      expect(RubyAI::Configuration::BASE_URL).to eq("https://api.openai.com/v1/chat/completions")
+    specify "OpenAI base URL from PROVIDERS" do
+      expect(RubyAI::Configuration::PROVIDERS["openai"]).to eq("https://api.openai.com/v1/chat/completions")
     end
 
-    specify "DEFAULT_MODEL" do
-      expect(RubyAI::Configuration::DEFAULT_MODEL).to eq("gpt-3.5-turbo")
+    specify "Default model from configuration" do
+      expect(RubyAI.configuration.model).to eq("gpt-3.5-turbo")
     end
 
-    specify "DEFAULT_PROVIDER" do
-      expect(RubyAI::Configuration::DEFAULT_PROVIDER).to eq("openai")
+    specify "Default provider from configuration" do
+      expect(RubyAI.configuration.provider).to eq("openai")
     end
   end
 end

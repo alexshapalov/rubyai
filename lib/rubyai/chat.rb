@@ -22,7 +22,6 @@ module RubyAI
         req.body = body.to_json
       end
 
-      puts response.body.inspect + "\n\n\n\n\n\n\n\n\n"
       JSON.parse(response.body)
     end
 
