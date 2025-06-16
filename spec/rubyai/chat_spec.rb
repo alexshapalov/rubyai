@@ -1,2 +1,2 @@
-require_relative '../../lib/rubyai/chat'
-require 'webmock/rspec'
+require_relative "../../lib/rubyai/chat"
+require "webmock/rspec"

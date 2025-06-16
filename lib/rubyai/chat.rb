@@ -1,7 +1,7 @@
 module RubyAI
   class Chat
     attr_accessor :provider, :model, :temperature
-    
+
     def initialize(provider, model: nil, temperature: 0.7)
       @provider = provider
       @model = model || RubyAI::Configuration::DEFAULT_MODEL
@@ -28,14 +28,14 @@ module RubyAI
     def connection
       @connection ||= Faraday.new do |faraday|
         faraday.adapter Faraday.default_adapter
-        faraday.headers['Content-Type'] = 'application/json'
+        faraday.headers["Content-Type"] = "application/json"
       end
     rescue Faraday::Error => e
       raise "Connection error: #{e.message}"
     rescue JSON::ParserError => e
       raise "Response parsing error: #{e.message}"
     rescue StandardError => e
-      raise "An unexpected error occurred: #{e.message}"  
+      raise "An unexpected error occurred: #{e.message}"
     end
   end
 end

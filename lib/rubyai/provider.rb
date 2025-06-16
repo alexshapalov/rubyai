@@ -1,12 +1,12 @@
 module RubyAI
-  module Provider  
+  module Provider
     PROVIDERS = {
-      'openai' => RubyAI::Providers::OpenAI,
+      "openai" => RubyAI::Providers::OpenAI,
       # doesn't tested yet because i don't have an anthropic api key
-      'anthropic' => RubyAI::Providers::Anthropic
-    }
+      "anthropic" => RubyAI::Providers::Anthropic
+    }.freeze
 
-    module_function 
+    module_function
 
     def [](provider)
       PROVIDERS.fetch(provider)

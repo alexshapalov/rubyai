@@ -32,7 +32,8 @@ Gem::Specification.new do |s|
   # Metadata information (optional but useful for gem hosts)
   s.metadata = {
     "source_code_uri" => "https://github.com/alexshapalov/rubyai",
-    "changelog_uri"   => "https://github.com/alexshapalov/rubyai/CHANGELOG.md",
-    "documentation_uri" => "https://github.com/alexshapalov/rubyai#readme"
+    "changelog_uri" => "https://github.com/alexshapalov/rubyai/CHANGELOG.md",
+    "documentation_uri" => "https://github.com/alexshapalov/rubyai#readme",
+    "rubygems_mfa_required" => "true"
   }
 end
