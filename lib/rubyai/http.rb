@@ -6,8 +6,8 @@ module RubyAI
       Provider::PROVIDERS.fetch(provider).build_http_body(messages, model, temperature)
     end
 
-    def build_headers(provider, config)
-      Provider::PROVIDERS.fetch(provider).build_http_headers(provider, config)
+    def build_headers(provider)
+      Provider::PROVIDERS.fetch(provider).build_http_headers(provider)
     end
   end
 end

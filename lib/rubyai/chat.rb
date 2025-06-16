@@ -2,9 +2,11 @@ module RubyAI
   class Chat
     attr_accessor :provider, :model, :temperature
 
-    def initialize(provider, model: nil, temperature: 0.7)
-      @provider = provider
-      @model = model || RubyAI::Configuration::DEFAULT_MODEL
+    def initialize(provider,
+                   model: RubyAI.config.default_model, 
+                   temperature: RubyAI.config.default_temperature)
+      @provider = provider || RubyAI.config.default_provider
+      @model = model
       @temperature = temperature
     end
 
@@ -12,14 +14,15 @@ module RubyAI
       raise ArgumentError, "Messages cannot be empty" if messages.nil? || messages.empty?
 
       body = HTTP.build_body(messages, @provider, @model, @temperature)
-      headers = HTTP.build_headers(provider, RubyAI.config)
+      headers = HTTP.build_headers(provider)
 
       response = connection.post do |req|
-        req.url Configuration::PROVIDERS[@provider] || Configuration::BASE_URL
+        req.url Configuration::PROVIDERS[@provider, @model]
         req.headers.merge!(headers)
         req.body = body.to_json
       end
 
+      puts response.body.inspect + "\n\n\n\n\n\n\n\n\n"
       JSON.parse(response.body)
     end
 

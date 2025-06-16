@@ -1,17 +1,16 @@
 module RubyAI
   module Providers
     class OpenAI
-      extend RubyAI::Providers::ProviderConfiguration
-
+      include ProvidersConfiguration
+      
       attr_accessor :api, :messages, :temperature
 
-      def initialize(api:, messages: nil, temperature: 0.7)
+      # todo: make an initialization for separate instances for using multiple of them 
+      def initialize(api: nil, messages: nil, temperature: 0.7)
         @api = api
         @messages = messages
         @temperature = temperature
       end
-
-      DEFAULT_MODEL = "gpt-3.5-turbo".freeze
 
       def self.models
         {
@@ -26,18 +25,18 @@ module RubyAI
         }
       end
 
-      def self.build_http_body(messages, model, temperature = 0.7)
+      def self.build_http_body(messages = nil, model = "gpt-3.5-turbo", temperature = nil)
         {
-          model: Configuration::MODELS["openai"][model] || DEFAULT_MODEL,
-          messages: [{ role: "user", content: messages }],
-          temperature: temperature
+          model: Configuration::MODELS["openai"][model],
+          messages: [{ role: "user", content: messages || @messages}],
+          temperature: temperature || @temperature
         }
       end
 
-      def self.build_http_headers(_provider, _config)
+      def self.build_http_headers(_provider)
         {
           "Content-Type": "application/json",
-          Authorization: "Bearer #{api}"
+          Authorization: "Bearer #{@api || RubyAI.configuration.openai.api}"
         }
       end
     end

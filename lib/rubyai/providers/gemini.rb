@@ -1,11 +1,13 @@
 module RubyAI
   module Providers
     class Gemini
-      extend RubyAI::Providers::ProviderConfiguration
+      include ProvidersConfiguration
+
 
       attr_accessor :api, :messages, :temperature, :max_tokens
 
-      def initialize(api:, messages: nil, temperature: 0.7, max_tokens: 1000)
+       # todo: make an initialization for separate instances for using multiple of them 
+      def initialize(api: nil, messages: nil, temperature: 0.7, max_tokens: 1000)
         @api = api
         @messages = messages
         @temperature = temperature
@@ -20,27 +22,27 @@ module RubyAI
         }
       end
 
-      def self.build_http_body(messages, temperature = 0.7)
+      def self.build_http_body(messages = nil, model, temperature)
         {
           contents: [
             {
               parts: [
                 {
-                  text: messages
+                  text: messages || @messages
                 }
               ]
             }
           ],
           generationConfig: {
-            temperature: temperature,
-            maxOutputTokens: max_tokens,
+            temperature: temperature || @temperature,
+            maxOutputTokens: @max_tokens,
             topP: 0.8,
             topK: 10
           }
         }
       end
 
-      def self.build_http_headers(_provider, _config)
+      def self.build_http_headers(_provider)
         {
           "Content-Type" => "application/json"
         }
