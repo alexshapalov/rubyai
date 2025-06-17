@@ -1,8 +1,8 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-ruby '>= 2.7'
+ruby ">= 2.7"
 
-gem 'faraday'
-gem 'faraday-net_http_persistent'
-gem 'rspec'
-gem 'webmock'
+gem "faraday"
+gem "faraday-net_http_persistent"
+gem "rspec"
+gem "webmock"

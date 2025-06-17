@@ -1,31 +1,35 @@
 module RubyAI
   class Configuration
-    BASE_URL = "https://api.openai.com/v1/chat/completions"
+    PROVIDERS = {
+      "openai" => "https://api.openai.com/v1/chat/completions",
+      "anthropic" => "https://api.anthropic.com/v1/chat/completions",
+      "gemini" => "https://generativelanguage.googleapis.com/v1beta/models"
+    }.freeze
 
-    MODELS = {
-      "gpt-4" => "gpt-4",
-      "gpt-4-32k" => "gpt-4-32k",
-      "gpt-4-turbo" => "gpt-4-turbo",
-      "gpt-4o-mini" => "gpt-4o-mini",
-      "o1-mini" => "o1-mini",
-      "o1-preview" => "o1-preview",
-      "text-davinci-003" => "text-davinci-003"
-    }
+    def PROVIDERS.[](provider, model = nil)
+      return super(provider) unless !model.nil? && provider == "gemini"
 
-    DEFAULT_MODEL = "gpt-3.5-turbo"
+      "#{super(provider)}/#{model}:generateContent?key=#{RubyAI.configuration.gemini.api}"
+    end
 
-    attr_accessor :api_key, :model, :messages, :temperature
+    MODELS = PROVIDERS.to_h do |provider, _url|
+      [provider, Provider[provider].models]
+    end.freeze
 
-    def initialize(config = {})
-      @api_key = config[:api_key]
-      @model = config.fetch(:model, DEFAULT_MODEL)
-      @messages = config.fetch(:messages, nil)
-      @temperature = config.fetch(:temperature, 0.7)
+    # default values for configuration
+    attr_accessor :openai,
+                  :anthropic,
+                  :gemini
+
+    def initialize(_config = {})
+      @openai = Providers::OpenAI.new
+      @anthropic = Providers::Anthropic.new
+      @gemini = Providers::Gemini.new
     end
   end
 
   def self.configuration
-    @configuration ||= Configuration.new
+    @configuration ||= RubyAI.config({})
   end
 
   def self.configure
