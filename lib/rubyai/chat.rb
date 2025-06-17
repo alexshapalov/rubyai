@@ -3,7 +3,7 @@ module RubyAI
     attr_accessor :provider, :model, :temperature
 
     def initialize(provider,
-                   model: nil, 
+                   model: nil,
                    temperature: 0.75)
       @provider = provider || RubyAI.config.default_provider
       @model = model

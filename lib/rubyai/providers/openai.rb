@@ -2,10 +2,10 @@ module RubyAI
   module Providers
     class OpenAI
       include ProvidersConfiguration
-      
+
       attr_accessor :api, :messages, :temperature, :model
 
-      # todo: make an initialization for separate instances for using multiple of them 
+      # TODO: make an initialization for separate instances for using multiple of them
       def initialize(api: nil, messages: nil, temperature: 0.7)
         @api = api
         @messages = messages
@@ -28,7 +28,7 @@ module RubyAI
       def self.build_http_body(messages = nil, model = "gpt-3.5-turbo", temperature = nil)
         {
           model: Configuration::MODELS["openai"][model],
-          messages: [{ role: "user", content: messages || @messages}],
+          messages: [{ role: "user", content: messages || @messages }],
           temperature: temperature || @temperature
         }
       end

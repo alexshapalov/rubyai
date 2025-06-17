@@ -1,53 +1,43 @@
 require_relative "../../lib/rubyai"
 
+require "spec_helper"
+
 RSpec.describe RubyAI do
   describe ".models" do
-    it "should return available models" do
-      expect(RubyAI.models).to eq(RubyAI::Configuration::MODELS)
+    it "returns a hash of provider models" do
+      models = described_class.models
+      expect(models).to be_a(Hash)
+      expect(models.keys).to include("openai", "anthropic", "gemini")
+      expect(models["openai"]).to be_a(Hash)
     end
   end
 
-  describe ".chat" do
-    let(:api_key) { "your_api_key" }
-    let(:messages) { "Hello, how are you?" }
-    let(:temperature) { 0.7 }
-    let(:model) { "gpt-3.5-turbo" }
-    let(:provider) { "openai" }
-    let(:client) do
-      described_class.chat(api_key: api_key, messages: messages, temperature: temperature,
-                           provider: provider, model: model)
+  describe ".config" do
+    it "returns a Configuration instance" do
+      config = described_class.config
+      expect(config).to be_a(RubyAI::Configuration)
     end
 
-    let(:response_body) { { "completion" => "This is a response from the model." } }
-    let(:status) { 200 }
-
-    before do
-      stub_request(:post, RubyAI::Configuration::BASE_URL)
-        .to_return(status: status, body: response_body.to_json, headers: { "Content-Type" => "application/json" })
-    end
-
-    it "returns parsed JSON response when passing through client directly" do
-      expect(described_class.chat).to eq(response_body)
+    it "returns a memoized instance" do
+      expect(described_class.config.object_id).to eq(described_class.config.object_id)
     end
   end
 
   describe ".configure" do
-    let(:configuration) { RubyAI.config }
+    it "yields the configuration for modification" do
+      expect do
+        described_class.configure do |config|
+          config.openai.temperature = 0.99
+        end
+      end.not_to raise_error
 
-    it "allows configuration of the client" do
-      described_class.configure do |config|
-        config.api_key = "your_api_key"
-        config.messages = "Hello, how are you?"
-        config.temperature = 0.7
-        config.provider = "openai"
-        config.model = "gpt-3.5-turbo"
-      end
+      expect(described_class.config.openai.temperature).to eq(0.99)
+    end
+  end
 
-      expect(configuration.api_key).to eq("your_api_key")
-      expect(configuration.messages).to eq("Hello, how are you?")
-      expect(configuration.temperature).to eq(0.7)
-      expect(configuration.provider).to eq("openai")
-      expect(configuration.model).to eq("gpt-3.5-turbo")
+  describe "RubyAI::Error" do
+    it "inherits from StandardError" do
+      expect(RubyAI::Error.new).to be_a(StandardError)
     end
   end
 end

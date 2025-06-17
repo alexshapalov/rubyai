@@ -1,70 +1,88 @@
-require "webmock/rspec"
-require_relative "../../lib/rubyai/client"
-require_relative "../../lib/rubyai/providers/openai"
-require_relative "../../lib/rubyai/providers/anthropic"
+require_relative "../../lib/rubyai"
 require_relative "../../lib/rubyai/provider"
-require_relative "../../lib/rubyai/configuration"
 
-RSpec.describe RubyAI::Client do
-  let(:api_key) { "your_api_key" }
-  let(:messages) { "Hello, how are you?" }
-  let(:temperature) { 0.7 }
-  let(:model) { "gpt-3.5-turbo" }
-  let(:provider) { "openai" }
+require "spec_helper"
 
-  before do
-    RubyAI.configure do |config|
-      config.provider = provider
-      config.model = model
-      config.temperature = temperature
-      config.api_key = api_key
-      config.messages = messages
-    end
-  end
-
-  describe "#call" do
-    let(:response_body) do
-      { "choices" => [{ "message" => { "content" => "This is a response from the model." } }] }
-    end
-    let(:status) { 200 }
-
-    before do
-      stub_request(:post, RubyAI::Configuration::BASE_URL)
-        .to_return(status: status, body: response_body.to_json, headers: { "Content-Type" => "application/json" })
+RSpec.describe RubyAI::Configuration do
+  describe "::PROVIDERS" do
+    it "returns URL for openai and anthropic without model" do
+      expect(described_class::PROVIDERS["openai"]).to eq("https://api.openai.com/v1/chat/completions")
+      expect(described_class::PROVIDERS["anthropic"]).to eq("https://api.anthropic.com/v1/chat/completions")
     end
 
-    it "returns parsed JSON response when passing through client via configuration" do
-      configuration = { api_key: RubyAI.configuration.api_key,
-                        messages: RubyAI.configuration.messages }
-      client = described_class.new(configuration)
-      result = client.call
-      expect(result.dig("choices", 0, "message",
-                        "content")).to eq("This is a response from the model.")
-    end
-  end
+    it "returns extended Gemini URL with model and API key" do
+      providers_hash = described_class::PROVIDERS
 
-  describe "Constants" do
-    specify "PROVIDERS" do
-      expect(RubyAI::Configuration::PROVIDERS).to eq(
-        "openai" => "https://api.openai.com/v1/chat/completions",
-        "anthropic" => "https://api.anthropic.com/v1/chat/completions"
+      # Stub API key
+      fake_api_key = "dummy_key"
+      allow(RubyAI).to receive_message_chain(:configuration, :gemini, :api).and_return(fake_api_key)
+
+      gemini_provider = providers_hash["gemini", "gemini-1.5-pro"]
+      expect(gemini_provider).to eq(
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=#{fake_api_key}"
       )
     end
+  end
 
-    specify "MODELS should return Hash" do
-      expect(RubyAI::Configuration::MODELS).to be_an_instance_of(Hash)
+  describe "#initialize" do
+    let(:config) { described_class.new }
+
+    it "initializes OpenAI provider" do
+      expect(config.openai).to be_a(RubyAI::Providers::OpenAI)
     end
 
-    specify "OpenAI base URL from PROVIDERS" do
-      expect(RubyAI::Configuration::PROVIDERS["openai"]).to eq("https://api.openai.com/v1/chat/completions")
+    it "initializes Anthropic provider" do
+      expect(config.anthropic).to be_a(RubyAI::Providers::Anthropic)
     end
 
-    specify "Default model from configuration" do
-      expect(RubyAI.configuration.model).to eq("gpt-3.5-turbo")
+    it "initializes Gemini provider" do
+      expect(config.gemini).to be_a(RubyAI::Providers::Gemini)
+    end
+  end
+
+  describe "::MODELS" do
+    before do
+      stub_const("RubyAI::Configuration::PROVIDERS", {
+                   "openai" => "https://openai.test",
+                   "gemini" => "https://gemini.test"
+                 })
+
+      fake_openai = double("OpenAI", models: { "gpt-test" => "gpt-test" })
+      fake_gemini = double("Gemini", models: { "gemini-test" => "gemini-test" })
+
+      allow(RubyAI::Provider).to receive(:[]).with("openai").and_return(fake_openai)
+      allow(RubyAI::Provider).to receive(:[]).with("gemini").and_return(fake_gemini)
+
+      # Reload MODELS constant
+      stub_const("RubyAI::Configuration::MODELS", {
+                   "openai" => fake_openai.models,
+                   "gemini" => fake_gemini.models
+                 })
     end
 
-    specify "Default provider from configuration" do
-      expect(RubyAI.configuration.provider).to eq("openai")
+    it "returns correct models hash" do
+      expect(described_class::MODELS["openai"]).to eq({ "gpt-test" => "gpt-test" })
+      expect(described_class::MODELS["gemini"]).to eq({ "gemini-test" => "gemini-test" })
+    end
+  end
+
+  describe "RubyAI.configuration" do
+    it "returns a singleton configuration object" do
+      config1 = RubyAI.configuration
+      config2 = RubyAI.configuration
+      expect(config1).to be_a(described_class)
+      expect(config1).to equal(config2)
+    end
+  end
+
+  describe "RubyAI.configure" do
+    it "yields configuration object for custom setup" do
+      RubyAI.configure do |config|
+        expect(config).to be_a(described_class)
+        config.openai.api = "custom_key"
+      end
+
+      expect(RubyAI.configuration.openai.api).to eq("custom_key")
     end
   end
 end

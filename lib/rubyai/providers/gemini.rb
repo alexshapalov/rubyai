@@ -3,10 +3,9 @@ module RubyAI
     class Gemini
       include ProvidersConfiguration
 
-
       attr_accessor :api, :messages, :temperature, :max_tokens, :model
 
-       # todo: make an initialization for separate instances for using multiple of them 
+      # TODO: make an initialization for separate instances for using multiple of them
       def initialize(api: nil, messages: nil, temperature: 0.7, max_tokens: 1000)
         @api = api
         @messages = messages
@@ -22,7 +21,7 @@ module RubyAI
         }
       end
 
-      def self.build_http_body(messages = nil, model, temperature)
+      def self.build_http_body(messages = nil, _model, temperature)
         {
           contents: [
             {
