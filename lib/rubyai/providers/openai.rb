@@ -12,7 +12,7 @@ module RubyAI
         @temperature = temperature
       end
 
-      def self.models
+      def models
         {
           "gpt-3.5-turbo" => "gpt-3.5-turbo",
           "gpt-4" => "gpt-4",
@@ -25,18 +25,18 @@ module RubyAI
         }
       end
 
-      def self.build_http_body(messages = nil, model = "gpt-3.5-turbo", temperature = nil)
+      def build_http_body(messages = nil, model = "gpt-3.5-turbo", temperature = nil)
         {
-          model: Configuration::MODELS["openai"][model],
+          model: RubyAI.config.models["openai"][model],
           messages: [{ role: "user", content: messages || @messages }],
           temperature: temperature || @temperature
         }
       end
 
-      def self.build_http_headers(_provider)
+      def build_http_headers(_provider)
         {
           "Content-Type": "application/json",
-          Authorization: "Bearer #{@api || RubyAI.configuration.openai.api}"
+          Authorization: "Bearer #{@api || RubyAI.config.openai.api}"
         }
       end
     end

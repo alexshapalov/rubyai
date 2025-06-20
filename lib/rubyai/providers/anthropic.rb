@@ -14,7 +14,7 @@ module RubyAI
         @model = model
       end
 
-      def self.models
+      def models
         {
           "claude-2" => "claude-2",
           "claude-instant-100k" => "claude-instant-100k",
@@ -25,23 +25,23 @@ module RubyAI
         }.freeze
       end
 
-      def self.build_http_body(messages = nil, model = nil, temperature = nil)
+      def build_http_body(messages = nil, model = nil, temperature = nil)
         {
-          "model" => Configuration::MODELS["anthropic"][model || @model],
+          "model" => RubyAI.config.models["anthropic"][model || @model],
           "max_tokens" => 1024, # Required parameter for Anthropic API
           "messages" => format_messages_for_antropic(messages || @messages),
           "temperature" => temperature || @temperature
         }
       end
 
-      def self.build_http_headers(_provider)
+      def build_http_headers(_provider)
         {
-          "x-api-key" => RubyAI.configuration.anthropic.api,
+          "x-api-key" => RubyAI.config.anthropic.api,
           "anthropic-version" => "2023-06-01"
         }
       end
 
-      def self.format_messages_for_antropic(messages)
+      def format_messages_for_antropic(messages)
         # Messages should be an array of message objects
         # Each message needs 'role' (either 'user' or 'assistant') and 'content'
         if messages.is_a?(String)
