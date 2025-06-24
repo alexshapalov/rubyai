@@ -15,7 +15,7 @@ RSpec.describe RubyAI::Configuration do
 
       # Stub API key
       fake_api_key = "dummy_key"
-      allow(RubyAI).to receive_message_chain(:configuration, :gemini, :api).and_return(fake_api_key)
+      allow(RubyAI).to receive_message_chain(:config, :gemini, :api).and_return(fake_api_key)
 
       gemini_provider = providers_hash["gemini", "gemini-1.5-pro"]
       expect(gemini_provider).to eq(
@@ -68,8 +68,8 @@ RSpec.describe RubyAI::Configuration do
 
   describe "RubyAI.configuration" do
     it "returns a singleton configuration object" do
-      config1 = RubyAI.configuration
-      config2 = RubyAI.configuration
+      config1 = RubyAI.config
+      config2 = RubyAI.config
       expect(config1).to be_a(described_class)
       expect(config1).to equal(config2)
     end
@@ -82,7 +82,7 @@ RSpec.describe RubyAI::Configuration do
         config.openai.api = "custom_key"
       end
 
-      expect(RubyAI.configuration.openai.api).to eq("custom_key")
+      expect(RubyAI.config.openai.api).to eq("custom_key")
     end
   end
 end

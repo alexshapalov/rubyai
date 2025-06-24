@@ -6,6 +6,7 @@ RSpec.describe RubyAI::Providers::Gemini do
   subject(:gemini) do
     described_class.new(api: "fake_api", messages: "Hello", temperature: 0.9, max_tokens: 500)
   end
+  let(:instance) { described_class.new }
 
   describe "#initialize" do
     it "sets instance variables correctly" do
@@ -22,9 +23,9 @@ RSpec.describe RubyAI::Providers::Gemini do
     end
   end
 
-  describe ".models" do
+  describe "#models" do
     it "returns a hash of available Gemini models" do
-      expect(described_class.models).to include(
+      expect(instance.models).to include(
         "gemini-1.5-pro" => "gemini-1.5-pro",
         "gemini-1.5-flash" => "gemini-1.5-flash",
         "gemini-1.0-pro" => "gemini-1.0-pro"
@@ -32,8 +33,8 @@ RSpec.describe RubyAI::Providers::Gemini do
     end
   end
 
-  describe ".build_http_body" do
-    let(:body) { described_class.build_http_body("Hi", "gemini-1.5-pro", 0.6) }
+  describe "#build_http_body" do
+    let(:body) { instance.build_http_body("Hi", "gemini-1.5-pro", 0.6) }
 
     it "builds the correct request body format" do
       expect(body).to include(:contents, :generationConfig)
@@ -44,9 +45,9 @@ RSpec.describe RubyAI::Providers::Gemini do
     end
   end
 
-  describe ".build_http_headers" do
+  describe "#build_http_headers" do
     it "returns headers with content type JSON" do
-      expect(described_class.build_http_headers("any")).to eq({ "Content-Type" => "application/json" })
+      expect(instance.build_http_headers("any")).to eq({ "Content-Type" => "application/json" })
     end
   end
 end

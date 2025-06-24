@@ -6,6 +6,7 @@ RSpec.describe RubyAI::Providers::Anthropic do
   subject(:anthropic) do
     described_class.new(api: "test_api", messages: "Hello Claude", temperature: 0.5)
   end
+  let(:instance) { described_class.new }
 
   describe "#initialize" do
     it "initializes instance variables correctly" do
@@ -19,9 +20,9 @@ RSpec.describe RubyAI::Providers::Anthropic do
     end
   end
 
-  describe ".models" do
+  describe "#models" do
     it "returns the list of Anthropic models" do
-      expect(described_class.models).to include(
+      expect(instance.models).to include(
         "claude-2" => "claude-2",
         "claude-instant-100k" => "claude-instant-100k",
         "claude-1.3-sonnet-100k" => "claude-1.3-sonnet-100k"
@@ -29,7 +30,7 @@ RSpec.describe RubyAI::Providers::Anthropic do
     end
   end
 
-  describe ".build_http_body" do
+  describe "#build_http_body" do
     before do
       stub_const("Configuration::MODELS", {
                    "anthropic" => {
@@ -39,7 +40,7 @@ RSpec.describe RubyAI::Providers::Anthropic do
     end
 
     it "builds correct body with string message" do
-      result = described_class.build_http_body("Hi!", "claude-2", 0.6)
+      result = instance.build_http_body("Hi!", "claude-2", 0.6)
 
       expect(result["model"]).to eq("claude-2")
       expect(result["max_tokens"]).to eq(1024)
@@ -53,34 +54,34 @@ RSpec.describe RubyAI::Providers::Anthropic do
         { "role" => "assistant", "content" => "Hi!" }
       ]
 
-      result = described_class.build_http_body(messages, "claude-2", 0.5)
+      result = instance.build_http_body(messages, "claude-2", 0.5)
       expect(result["messages"]).to eq(messages)
     end
   end
 
-  describe ".build_http_headers" do
+  describe "#build_http_headers" do
     before do
-      allow(RubyAI).to receive_message_chain(:configuration, :anthropic,
+      allow(RubyAI).to receive_message_chain(:config, :anthropic,
                                              :api).and_return("real_api_key")
     end
 
     it "returns correct headers for Anthropic API" do
-      headers = described_class.build_http_headers("anthropic")
+      headers = instance.build_http_headers("anthropic")
 
       expect(headers["x-api-key"]).to eq("real_api_key")
       expect(headers["anthropic-version"]).to eq("2023-06-01")
     end
   end
 
-  describe ".format_messages_for_antropic" do
+  describe "#format_messages_for_antropic" do
     it "wraps string in user role message" do
-      result = described_class.send(:format_messages_for_antropic, "Hello")
+      result = instance.send(:format_messages_for_antropic, "Hello")
       expect(result).to eq([{ "role" => "user", "content" => "Hello" }])
     end
 
     it "returns array unchanged if already properly formatted" do
       messages = [{ "role" => "assistant", "content" => "Hi" }]
-      result = described_class.send(:format_messages_for_antropic, messages)
+      result = instance.send(:format_messages_for_antropic, messages)
       expect(result).to eq(messages)
     end
   end
