@@ -34,7 +34,7 @@ module RubyAI
       @anthropic ||= Providers::Anthropic.new
       @gemini ||= Providers::Gemini.new
       return if config.nil?
-      provider_key = config.fetch(:model, nil).nil? ? "openai" : models.find { |_, models| models.include?(config[:model]) }
+      provider_key = config.fetch(:model, nil).nil? ? "openai" : models.find { |provider, models| models.include?(config[:model]) }.first
 
       raise ArgumentError, "Unknown model: #{config[:model]}" unless provider_key
 

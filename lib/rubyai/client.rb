@@ -11,7 +11,7 @@ module RubyAI
       provider = configuration.provider
       model = configuration.model
       temperature = configuration.temperature
-      # raise ArgumentError, "Messages cannot be empty" if messages.nil? || messages.empty?
+      raise ArgumentError, "Messages cannot be empty" if messages.nil? || messages.empty?
 
       body = HTTP.build_body(messages, provider, model, temperature)
       headers = HTTP.build_headers(provider)
