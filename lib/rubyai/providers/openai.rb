@@ -5,7 +5,6 @@ module RubyAI
 
       attr_accessor :api, :messages, :temperature, :model
 
-      # TODO: make an initialization for separate instances for using multiple of them
       def initialize(api: nil, messages: nil, temperature: 0.7)
         @api = api
         @messages = messages
@@ -35,7 +34,6 @@ module RubyAI
 
       def build_http_headers(_provider)
         {
-          "Content-Type": "application/json",
           Authorization: "Bearer #{@api || RubyAI.config.openai.api}"
         }
       end

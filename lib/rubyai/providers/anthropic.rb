@@ -1,12 +1,10 @@
 module RubyAI
   module Providers
-    # doesn't tested yet because i don't have an anthropic api key
     class Anthropic
       include ProvidersConfiguration
 
       attr_accessor :api, :messages, :temperature, :max_tokens
 
-      # TODO: make an initialization for separate instances for using multiple of them
       def initialize(api: nil, messages: nil, temperature: 0.7, model: "claude-2")
         @api = api
         @messages = messages
