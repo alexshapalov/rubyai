@@ -1,8 +1,6 @@
 module RubyAI
   module Providers
-    class OpenAI
-      include ProvidersConfiguration
-
+    class OpenAI < Base
       attr_accessor :api, :messages, :temperature, :model
 
       def initialize(api: nil, messages: nil, temperature: 0.7)

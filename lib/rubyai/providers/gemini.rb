@@ -1,8 +1,6 @@
 module RubyAI
   module Providers
-    class Gemini
-      include ProvidersConfiguration
-
+    class Gemini < Base
       attr_accessor :api, :messages, :temperature, :max_tokens, :model
 
       def initialize(api: nil, messages: nil, temperature: 0.7, max_tokens: 1000)

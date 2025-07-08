@@ -1,8 +1,6 @@
 module RubyAI
   module Providers
-    class Anthropic
-      include ProvidersConfiguration
-
+    class Anthropic < Base
       attr_accessor :api, :messages, :temperature, :max_tokens
 
       def initialize(api: nil, messages: nil, temperature: 0.7, model: "claude-2")

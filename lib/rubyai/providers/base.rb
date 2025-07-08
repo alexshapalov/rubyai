@@ -1,6 +1,6 @@
 module RubyAI
   module Providers
-    module ProvidersConfiguration
+    class Base
       def configure
         yield self
       end
