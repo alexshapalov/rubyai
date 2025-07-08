@@ -17,7 +17,7 @@ module RubyAI
   class Error < StandardError; end
 
   def self.models
-    config.models
+    RubyAI::Provider.models
   end
 
   def self.configure

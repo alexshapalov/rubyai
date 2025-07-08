@@ -11,34 +11,16 @@ module RubyAI
                   :temperature,
                   :provider
 
-    PROVIDERS = {
-      "openai" => "https://api.openai.com/v1/chat/completions",
-      "anthropic" => "https://api.anthropic.com/v1/chat/completions",
-      "gemini" => "https://generativelanguage.googleapis.com/v1beta/models"
-    }
-
-    def PROVIDERS.[](provider, model = nil)
-      return super(provider) unless !model.nil? && provider == "gemini"
-
-      "#{super(provider)}/#{model}:generateContent?key=#{RubyAI.config.gemini.api}"
-    end
-
-    def models 
-      PROVIDERS.to_h do |provider, _url|
-        [provider, send(provider).models]
-      end
-    end
-
     def initialize(config = nil)
       @openai ||= Providers::OpenAI.new
       @anthropic ||= Providers::Anthropic.new
       @gemini ||= Providers::Gemini.new
-      return if config.nil?
-      provider_key = config.fetch(:model, nil).nil? ? "openai" : models.find { |provider, models| models.include?(config[:model]) }.first
+      return if config.nil? || config.empty? 
+      provider_key = config.fetch(:model, nil).nil? ? "openai" : Provider.models.find { |provider, models| models.include?(config[:model]) }.first
 
       raise ArgumentError, "Unknown model: #{config[:model]}" unless provider_key
 
-      @model = config.fetch(:model, models["openai"]["gpt-3.5-turbo"])
+      @model = config.fetch(:model, Provider.models["openai"]["gpt-3.5-turbo"])
       provider = send(provider_key)
       provider.api = config[:api_key]
       @api_key = provider.api

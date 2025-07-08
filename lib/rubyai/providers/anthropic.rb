@@ -25,7 +25,7 @@ module RubyAI
 
       def build_http_body(messages = nil, model = nil, temperature = nil)
         {
-          "model" => RubyAI.config.models["anthropic"][model || @model],
+          "model" => RubyAI::Provider.models["anthropic"][model || @model],
           "max_tokens" => 1024, # Required parameter for Anthropic API
           "messages" => format_messages_for_antropic(messages || @messages),
           "temperature" => temperature || @temperature

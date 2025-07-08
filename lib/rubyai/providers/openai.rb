@@ -26,7 +26,7 @@ module RubyAI
 
       def build_http_body(messages = nil, model = "gpt-3.5-turbo", temperature = nil)
         {
-          model: RubyAI.config.models["openai"][model],
+          model: RubyAI::Provider.models["openai"][model],
           messages: [{ role: "user", content: messages || @messages }],
           temperature: temperature || @temperature
         }

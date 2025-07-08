@@ -17,7 +17,7 @@ module RubyAI
       headers = HTTP.build_headers(provider)
 
       response = connection.post do |req|
-        req.url Configuration::PROVIDERS[provider, model]
+        req.url Provider::PROVIDERS[provider, model]
         req.headers.merge!(headers)
         req.body = body.to_json
       end

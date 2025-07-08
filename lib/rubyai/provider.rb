@@ -1,16 +1,23 @@
 module RubyAI
   module Provider
-    PROVIDERS = {
-      "openai" => RubyAI::Providers::OpenAI,
-      # doesn't tested yet because i don't have an anthropic api key
-      "anthropic" => RubyAI::Providers::Anthropic,
-      "gemini" => RubyAI::Providers::Gemini
-    }.freeze
-
     module_function
+    
+    PROVIDERS = {
+      "openai" => "https://api.openai.com/v1/chat/completions",
+      "anthropic" => "https://api.anthropic.com/v1/chat/completions",
+      "gemini" => "https://generativelanguage.googleapis.com/v1beta/models"
+    }
 
-    def [](provider)
-      PROVIDERS.fetch(provider)
+    def PROVIDERS.[](provider, model = nil)
+      return super(provider) unless !model.nil? && provider == "gemini"
+
+      "#{super(provider)}/#{model}:generateContent?key=#{RubyAI.config.gemini.api}"
+    end
+
+    def models 
+      PROVIDERS.to_h do |provider, _url|
+        [provider, RubyAI.config.send(provider).models]
+      end
     end
   end
 end
