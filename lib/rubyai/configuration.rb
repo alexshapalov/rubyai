@@ -15,8 +15,16 @@ module RubyAI
       @openai ||= Providers::OpenAI.new
       @anthropic ||= Providers::Anthropic.new
       @gemini ||= Providers::Gemini.new
-      return if config.nil? || config.empty? 
-      provider_key = config.fetch(:model, nil).nil? ? "openai" : Provider.models.find { |provider, models| models.include?(config[:model]) }.first
+      return if config.nil? || config.empty?
+
+      provider_key = if config.fetch(:model,
+                                     nil).nil?
+                       "openai"
+                     else
+                       Provider.models.find do |_provider, models|
+                         models.include?(config[:model])
+                       end.first
+                     end
 
       raise ArgumentError, "Unknown model: #{config[:model]}" unless provider_key
 
@@ -32,7 +40,7 @@ module RubyAI
     end
 
     def self.config
-      @configuration ||= RubyAI.config({})
+      @config ||= RubyAI.config({})
     end
 
     def self.configure

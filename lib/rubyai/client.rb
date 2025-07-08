@@ -27,7 +27,7 @@ module RubyAI
 
     private
 
-    def connection 
+    def connection
       connection ||= Faraday.new do |faraday|
         faraday.adapter Faraday.default_adapter
         faraday.headers["Content-Type"] = "application/json"

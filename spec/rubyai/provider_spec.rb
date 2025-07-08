@@ -7,7 +7,7 @@ require_relative "../../lib/rubyai/provider"
 require "spec_helper"
 
 RSpec.describe RubyAI::Provider do
-    describe "::PROVIDERS" do
+  describe "::PROVIDERS" do
     it "returns URL for openai and anthropic without model" do
       expect(described_class::PROVIDERS["openai"]).to eq("https://api.openai.com/v1/chat/completions")
       expect(described_class::PROVIDERS["anthropic"]).to eq("https://api.anthropic.com/v1/chat/completions")
@@ -52,5 +52,4 @@ RSpec.describe RubyAI::Provider do
       expect(described_class::MODELS["gemini"]).to eq({ "gemini-test" => "gemini-test" })
     end
   end
-
 end
