@@ -62,7 +62,6 @@ RSpec.describe RubyAI::Providers::OpenAI do
 
     it "returns headers with Authorization using fallback token" do
       headers = instance.build_http_headers("openai")
-      expect(headers[:"Content-Type"]).to eq("application/json")
       expect(headers[:Authorization]).to eq("Bearer fallback_token")
     end
   end

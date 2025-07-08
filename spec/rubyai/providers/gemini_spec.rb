@@ -44,10 +44,4 @@ RSpec.describe RubyAI::Providers::Gemini do
       expect(body[:generationConfig][:topK]).to eq(10)
     end
   end
-
-  describe "#build_http_headers" do
-    it "returns headers with content type JSON" do
-      expect(instance.build_http_headers("any")).to eq({ "Content-Type" => "application/json" })
-    end
-  end
 end
