@@ -1,4 +1,4 @@
-require_relative "../../lib/rubyai/providers/providers_configuration"
+require_relative "../../lib/rubyai/providers/base"
 require_relative "../../lib/rubyai/providers/openai"
 require_relative "../../lib/rubyai/providers/anthropic"
 require_relative "../../lib/rubyai/providers/gemini"

@@ -1,5 +1,5 @@
 require "spec_helper"
-require_relative "../../../lib/rubyai/providers/providers_configuration"
+require_relative "../../../lib/rubyai/providers/base"
 require_relative "../../../lib/rubyai/providers/gemini"
 
 RSpec.describe RubyAI::Providers::Gemini do

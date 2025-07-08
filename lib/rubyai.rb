@@ -2,7 +2,7 @@ require "faraday"
 require "faraday/net_http_persistent"
 require "json"
 
-require_relative "rubyai/providers/providers_configuration"
+require_relative "rubyai/providers/base"
 require_relative "rubyai/providers/openai"
 require_relative "rubyai/providers/anthropic"
 require_relative "rubyai/providers/gemini"
