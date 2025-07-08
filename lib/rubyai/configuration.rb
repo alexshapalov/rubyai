@@ -1,34 +1,50 @@
 module RubyAI
   class Configuration
-    BASE_URL = "https://api.openai.com/v1/chat/completions"
+    # providers config accessors
+    attr_accessor :openai,
+                  :anthropic,
+                  :gemini,
+                  # default api config accessors
+                  :api,
+                  :model,
+                  :messages,
+                  :temperature,
+                  :provider
 
-    MODELS = {
-      "gpt-4" => "gpt-4",
-      "gpt-4-32k" => "gpt-4-32k",
-      "gpt-4-turbo" => "gpt-4-turbo",
-      "gpt-4o-mini" => "gpt-4o-mini",
-      "o1-mini" => "o1-mini",
-      "o1-preview" => "o1-preview",
-      "text-davinci-003" => "text-davinci-003"
-    }
+    def initialize(config = nil)
+      @openai ||= Providers::OpenAI.new
+      @anthropic ||= Providers::Anthropic.new
+      @gemini ||= Providers::Gemini.new
+      return if config.nil? || config.empty?
 
-    DEFAULT_MODEL = "gpt-3.5-turbo"
+      provider_key = if config.fetch(:model,
+                                     nil).nil?
+                       "openai"
+                     else
+                       Provider.models.find do |_provider, models|
+                         models.include?(config[:model])
+                       end.first
+                     end
 
-    attr_accessor :api_key, :model, :messages, :temperature
+      raise ArgumentError, "Unknown model: #{config[:model]}" unless provider_key
 
-    def initialize(config = {})
-      @api_key = config[:api_key]
-      @model = config.fetch(:model, DEFAULT_MODEL)
-      @messages = config.fetch(:messages, nil)
-      @temperature = config.fetch(:temperature, 0.7)
+      @model = config.fetch(:model, Provider.models["openai"]["gpt-3.5-turbo"])
+      provider = send(provider_key)
+      provider.api = config[:api_key]
+      @api_key = provider.api
+      provider.messages = config[:messages]
+      @messages = provider.messages
+      @provider = provider_key
+      provider.temperature = config.fetch(:temperature, 0.7)
+      @temperature = provider.temperature
     end
-  end
 
-  def self.configuration
-    @configuration ||= Configuration.new
-  end
+    def self.config
+      @config ||= RubyAI.config({})
+    end
 
-  def self.configure
-    yield(configuration)
+    def self.configure
+      yield(config)
+    end
   end
 end
